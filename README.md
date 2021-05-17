@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-DEMO 💜  https://fedelombar.github.io/spa-basic-react/
+DEMO 💜 https://fedelombar.github.io/react-spa-marvel-app/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
