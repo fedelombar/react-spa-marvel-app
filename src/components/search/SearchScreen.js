@@ -27,7 +27,7 @@ export const SearchScreen = ({ history }) => {
 
   return (
     <div>
-      <h1 className="text-white">Search Screen</h1>
+      <h1 className="text-white title">Search Screen</h1>
       <hr />
 
       <div className="row">
