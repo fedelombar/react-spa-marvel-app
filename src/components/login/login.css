@@ -1,0 +1,12 @@
+#loginCont {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: rotateZ(-5deg);
+  width: 150vw;
+  margin-left: -25vw;
+  position: absolute;
+}
+
+#loginPanel {
+  width: 600px;
+  max-width: 100%;
+}

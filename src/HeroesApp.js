@@ -3,6 +3,9 @@ import { AuthContext } from "./auth/AuthContext";
 import { authReducer } from "./auth/authReducer";
 import { AppRouter } from "./routers/AppRouter";
 
+import "animate.css";
+import "./app.css";
+
 const init = () => {
   return (
     JSON.parse(localStorage.getItem("user")) || {
