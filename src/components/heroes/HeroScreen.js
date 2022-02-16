@@ -40,7 +40,7 @@ export const HeroScreen = ({ history }) => {
       </div>
 
       <div className="col-8 animate__animated animate__fadeIn">
-        <h3> {superhero} </h3>
+        <h3 className="text-white"> {superhero} </h3>
         <ul className="list-group list-group-flush">
           <li className="list-group-item">
             {" "}
@@ -56,10 +56,13 @@ export const HeroScreen = ({ history }) => {
           </li>
         </ul>
 
-        <h5> Characters </h5>
-        <p> {characters} </p>
+        <h5 className="text-white mt-3"> Characters </h5>
+        <p className="bg-white p-4"> {characters} </p>
 
-        <button className="btn btn-outline-info" onClick={handleReturn}>
+        <button
+          className="btn btn-light border border-secondary"
+          onClick={handleReturn}
+        >
           Return
         </button>
       </div>
