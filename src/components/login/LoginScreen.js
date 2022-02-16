@@ -1,6 +1,7 @@
 import React, { useContext, useState, useCallback } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { types } from "../../types/types";
+import { loadingStore } from "../../stores/loadingStore";
 import "./login.css";
 
 export const LoginScreen = ({ history }) => {
@@ -22,22 +23,34 @@ export const LoginScreen = ({ history }) => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      //TODO implement an API call
-      if (username === "admin" && password === "admin") {
-        dispatch({
-          type: types.login,
-          payload: {
-            name: "Federico",
-          },
+
+      loadingStore.setState((state) => {
+        state.isVisible = true;
+      });
+
+      //Fake custom designed loading
+      setTimeout(() => {
+        loadingStore.setState((state) => {
+          state.isVisible = false;
         });
-      } else {
-        //If login credentials are wrong add animation
-        setAnimation("");
-        //Timeout needed to refresh the same animation
-        setTimeout(() => {
-          setAnimation("animate__tada");
-        }, 100);
-      }
+
+        //TODO implement an API call
+        if (username === "admin" && password === "admin") {
+          dispatch({
+            type: types.login,
+            payload: {
+              name: "Federico",
+            },
+          });
+        } else {
+          //If login credentials are wrong add animation
+          setAnimation("");
+          //Timeout needed to refresh the same animation
+          setTimeout(() => {
+            setAnimation("animate__tada");
+          }, 100);
+        }
+      }, 3000);
     },
     [username, password, dispatch, setAnimation]
   );
