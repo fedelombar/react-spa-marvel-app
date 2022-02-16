@@ -8,6 +8,7 @@ export const LoginScreen = ({ history }) => {
   const { dispatch } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState();
   const [animation, setAnimation] = useState("animate__zoomInDown");
 
   //Set username or password depending on the type passed
@@ -23,6 +24,9 @@ export const LoginScreen = ({ history }) => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
+
+      //Remove error flag
+      setError(false);
 
       loadingStore.setState((state) => {
         state.isVisible = true;
@@ -43,6 +47,7 @@ export const LoginScreen = ({ history }) => {
             },
           });
         } else {
+          setError(true);
           //If login credentials are wrong add animation
           setAnimation("");
           //Timeout needed to refresh the same animation
@@ -52,7 +57,7 @@ export const LoginScreen = ({ history }) => {
         }
       }, 3000);
     },
-    [username, password, dispatch, setAnimation]
+    [username, password, dispatch, setAnimation, setError]
   );
 
   return (
@@ -92,6 +97,10 @@ export const LoginScreen = ({ history }) => {
               value="Login"
             />
           </div>
+
+          {error && (
+            <div className="text-danger">Wrong username or password!</div>
+          )}
         </form>
       </div>
     </div>
