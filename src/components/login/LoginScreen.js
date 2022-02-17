@@ -1,34 +1,108 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useCallback } from "react";
 import { AuthContext } from "../../auth/AuthContext";
 import { types } from "../../types/types";
+import { loadingStore } from "../../stores/loadingStore";
+import "./login.css";
 
 export const LoginScreen = ({ history }) => {
   const { dispatch } = useContext(AuthContext);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState();
+  const [animation, setAnimation] = useState("animate__zoomInDown");
 
-  const handleLogin = () => {
-    //history.push('/')
+  //Set username or password depending on the type passed
+  const onInputChange = useCallback(
+    (val, type) => {
+      if (type === "username") setUsername(val);
+      else setPassword(val);
+    },
+    [setUsername, setPassword]
+  );
 
-    //aparecer en la ultima pantalla o pantalla que queria ingresar el usuario. mejora ux
-    const lastPath = localStorage.getItem("lastPath") || "/";
+  //On form submit
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
 
-    dispatch({
-      type: types.login,
-      payload: {
-        name: "Federico",
-      },
-    });
+      //Remove error flag
+      setError(false);
 
-    history.replace(lastPath);
-  };
+      loadingStore.setState((state) => {
+        state.isVisible = true;
+      });
+
+      //Fake custom designed loading
+      setTimeout(() => {
+        loadingStore.setState((state) => {
+          state.isVisible = false;
+        });
+
+        //TODO implement an API call
+        if (username === "admin" && password === "admin") {
+          dispatch({
+            type: types.login,
+            payload: {
+              name: "Federico",
+            },
+          });
+        } else {
+          setError(true);
+          //If login credentials are wrong add animation
+          setAnimation("");
+          //Timeout needed to refresh the same animation
+          setTimeout(() => {
+            setAnimation("animate__tada");
+          }, 100);
+        }
+      }, 3000);
+    },
+    [username, password, dispatch, setAnimation, setError]
+  );
 
   return (
-    <div className="container mt-5">
-      <h1> Login </h1>
-      <hr />
+    <div className="vh-100 vw-100 d-flex align-items-center">
+      <div className={`p-2 animate__animated ${animation}`} id="loginCont">
+        <form
+          className="p-4 mx-auto rounded"
+          id="loginPanel"
+          onSubmit={(e) => onSubmit(e)}
+        >
+          <h2 className="marvel-red-text title">Login</h2>
+          <label>*Username</label>
+          <input
+            required
+            className="w-100 mb-2"
+            type="text"
+            minLength={3}
+            maxLength={20}
+            value={username}
+            onChange={(e) => onInputChange(e.target.value, "username")}
+          />
 
-      <button className="btn btn-primary" onClick={handleLogin}>
-        Login
-      </button>
+          <label>*Password</label>
+          <input
+            required
+            className="w-100 mb-2"
+            type="password"
+            minLength={5}
+            maxLength={20}
+            value={password}
+            onChange={(e) => onInputChange(e.target.value, "password")}
+          />
+          <div className="d-flex justify-content-end">
+            <input
+              type="submit"
+              className="btn btn-light border border-secondary"
+              value="Login"
+            />
+          </div>
+
+          {error && (
+            <div className="text-danger">Wrong username or password!</div>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

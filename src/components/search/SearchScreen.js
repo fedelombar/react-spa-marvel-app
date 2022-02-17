@@ -27,12 +27,12 @@ export const SearchScreen = ({ history }) => {
 
   return (
     <div>
-      <h1>Search Screen</h1>
+      <h1 className="text-white title">Search Screen</h1>
       <hr />
 
       <div className="row">
         <div className="col-5">
-          <h4> Search Form</h4>
+          <h4 className="text-white"> Search Form</h4>
           <hr />
 
           <form onSubmit={handleSearch}>
@@ -48,14 +48,14 @@ export const SearchScreen = ({ history }) => {
 
             <button
               type="submit"
-              className="btn m-1 btn-block btn-outline-primary"
+              className="btn btn-light m-1 btn-block border border-secondary"
             >
               Search...
             </button>
           </form>
         </div>
         <div className="col-7">
-          <h4> Results </h4>
+          <h4 className="text-white"> Results </h4>
           <hr />
 
           {q === "" && <div className="alert alert-info">Search a hero</div>}

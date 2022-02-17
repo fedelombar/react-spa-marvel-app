@@ -7,12 +7,12 @@ export const HeroList = ({ publisher }) => {
   //const heroes = getHeroesByPublisher(publisher);
 
   return (
-    <div className="card-columns animate__animated animate__fadeIn">
-      <ul>
-        {heroes.map((hero) => (
-          <HeroCard key={hero.id} {...hero} />
+    <div className="animate__animated animate__fadeIn">
+      <div className="row">
+        {heroes.map((hero, heroIndex) => (
+          <HeroCard key={hero.id} heroIndex={heroIndex} {...hero} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
